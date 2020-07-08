@@ -156,6 +156,26 @@
     })
   }
   /**
+  * implement the sequence promise task
+  * @param {[Promise]} things The Array of promise
+  * @return {Promise} A new promise
+  */
+  Promise.queue = function (things) {
+        let len = things.length
+        let results = new Array(len)
+        return things.reduce((total, cur, index) => {
+          return total.then(() => {
+            return cur.then((res) => {
+              console.log(res)
+              results[index] = res
+              if (results.length == len) {
+                return results
+              }
+            })
+          })
+        }, Promise.resolve())
+      }
+  /**
   * @param {[Promise]} promises The Array of promise
   * @return {Promise} A new promise
   */
